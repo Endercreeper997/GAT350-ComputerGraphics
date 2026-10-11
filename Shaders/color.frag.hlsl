@@ -10,7 +10,7 @@ struct Output
 Output main(Input input)
 {
 	Output output;
-	output.Color = float4(1.0f, 0.0f, 0.0f, 1.0f);
+	output.Color = float4(0.0f, 1.0f, 0.5f, 1.0f);
 
 	return output;
 }
