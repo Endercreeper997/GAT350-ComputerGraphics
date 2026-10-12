@@ -8,16 +8,25 @@
 
 using namespace nu;
 
+namespace nu 
+{
+    struct Color4
+    {
+        float r, g, b, a;
+    };
+}
+
 struct Vertex
 {
-    float x, y, z;
+    Vector3 position;
+    Color4 color;
 };
 
 std::vector<Vertex> vertices =
 {
-    Vertex{ -1.0f, -1.0f, 0.0f}, // Bottom-Left
-    Vertex{  1.0f, -1.0f, 0.0f}, // Bottom-Right
-    Vertex{  0.4f,  -0.3f, 0.0f}, // Top-Middle
+    Vertex{ { -1.0f, -1.0f, 0.0f}, Color4{ 1, 0, 0, 1 } }, // Bottom-Left
+    Vertex{  {1.0f, -1.0f, 0.0f}, Color4{ 1, 0, 0, 1 } }, // Bottom-Right
+    Vertex{  {0.4f,  -0.3f, 0.0f}, Color4{ 1, 0, 0, 1 } }, // Top-Middle
 };
 
 int main()
@@ -36,10 +45,16 @@ int main()
 
     auto pipeline = std::make_shared<Pipeline>();
     pipeline->AddVertexBuffer(sizeof(Vertex));
+    //position
     pipeline->AddVertexAttribute(
         0,
         SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
-        offsetof(Vertex, x));
+        offsetof(Vertex, position));
+    //color
+    pipeline->AddVertexAttribute(
+        1,
+        SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
+        offsetof(Vertex, color));
 
     pipeline->Create(*vshader.get(), *fshader.get(),
         Engine::Instance().GetRenderer().GetGPUDevice(),
