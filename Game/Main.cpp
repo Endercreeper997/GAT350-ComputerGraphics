@@ -4,6 +4,12 @@
 #include "Renderer/VertexBuffer.h"
 #include "Renderer/Pipeline.h"
 
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/euler_angles.hpp>
+#include <glm/gtx/transform.hpp>
+
 #include "Resources/ResourceManager.h"
 
 using namespace nu;
@@ -24,9 +30,10 @@ struct Vertex
 
 std::vector<Vertex> vertices =
 {
-    Vertex{ { -1.0f, -1.0f, 0.0f}, Color4{ 1, 0, 0, 1 } }, // Bottom-Left
-    Vertex{  {1.0f, -1.0f, 0.0f}, Color4{ 1, 0, 0, 1 } }, // Bottom-Right
-    Vertex{  {0.4f,  -0.3f, 0.0f}, Color4{ 1, 0, 0, 1 } }, // Top-Middle
+    Vertex{ Vector3{  -1.0f, -1.0f, 0.0f}, Color4{ 0, 1, 0, 1 } },   // Bottom-Left
+    Vertex{  Vector3{  0.8f,  0.8f, 0.0f}, Color4{ 1, 1, 0, 1 } },     // Bottom-Right
+    Vertex{  Vector3{  0.4f, -0.3f, 0.0f}, Color4{ 1, 0, 1, 1 } },   // Top-Right
+    Vertex{  Vector3{  -0.4f, 0.3f, 0.0f}, Color4{ 1, 1, 0.5, 1 } },   // Top-Left
 };
 
 int main()
@@ -40,8 +47,8 @@ int main()
     auto vb = std::make_shared<VertexBuffer>();
     vb->Create<Vertex>(vertices, Engine::Instance().GetRenderer().GetGPUDevice());
 
-    auto vshader = Resources().Get<nu::Shader>("shaders/position.vert", Engine::Instance().GetRenderer());
-    auto fshader = Resources().Get<nu::Shader>("shaders/color.frag", Engine::Instance().GetRenderer());
+    auto vshader = Resources().Get<nu::Shader>("shaders/position.vert", Engine::Instance().GetRenderer(), 1);
+    auto fshader = Resources().Get<nu::Shader>("shaders/color.frag", Engine::Instance().GetRenderer(), 1);
 
     auto pipeline = std::make_shared<Pipeline>();
     pipeline->AddVertexBuffer(sizeof(Vertex));
@@ -60,16 +67,25 @@ int main()
         Engine::Instance().GetRenderer().GetGPUDevice(),
         Engine::Instance().GetRenderer().GetWindow());
 
+    Color4 color{ 0, 0, 0, 1 };
+    // GLM
+    struct vertexUniform
+    {
+        glm::mat4 mvp;
+    };
+
+    vertexUniform uniform;
+    glm::vec3 cameraPosition{ 0, 0, 5 };
 
     // MAIN LOOP
     bool quit = false;
-    while (!quit) 
+    while (!quit)
     {
         // UPDATE
         SDL_Event event;
-        while (SDL_PollEvent(&event)) 
+        while (SDL_PollEvent(&event))
         {
-            if (event.type == SDL_EVENT_QUIT) 
+            if (event.type == SDL_EVENT_QUIT)
             {
                 quit = true;
             }
@@ -79,9 +95,48 @@ int main()
             }
         }
 
+
+
         // ENGINE
         Engine::Instance().Update();
         float dt = Engine::Instance().GetTime().GetDeltaTime();
+        float time = Engine::Instance().GetTime().GetTime();
+
+        //color.r = sin(time * 10.0f) * 0.5f + 0.5f;
+
+        glm::vec3 direction{ 0.0f, 0, 0 };
+        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_A)) direction.x = -1;
+        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_D)) direction.x = +1;
+
+        cameraPosition += direction + 4.0f * dt;
+        
+
+
+
+
+
+
+
+
+        auto mxt = glm::translate(glm::vec3(0.0f, 0.0f, 0.0f));
+        //auto mxr = glm::rotate(glm::mat4(1.0f), time * 3.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+        auto mxr = glm::eulerAngleYXZ(0.0f, 0.0f, 0.0f); //time * 3.0f);
+
+
+
+        auto mxs = glm::scale(glm::vec3{ 1 });
+
+        auto model = mxt * mxr * mxs;
+
+        // VIEW MATRIX
+        auto view = glm::lookAtRH(cameraPosition, cameraPosition + glm::vec3{ 0, 0, -1 }, glm::vec3{ 0, 1, 0 });
+
+        // PROJECTION MATRIX
+        float aspectRatio = Engine::Instance().GetRenderer().GetWidth() / (float)Engine::Instance().GetRenderer().GetHeight();
+        auto projection = glm::perspective(glm::radians(70.0f), aspectRatio, 0.01f, 20.0f);
+
+
+        uniform.mvp = projection * view * model;
 
 
         // RENDER
@@ -89,6 +144,9 @@ int main()
 
         Engine::Instance().GetRenderer().SetPipeline(*pipeline);
         Engine::Instance().GetRenderer().SetVertexBuffer(*vb);
+        Engine::Instance().GetRenderer().SetVertexUniform(0, &uniform, sizeof(uniform));
+        Engine::Instance().GetRenderer().SetFragmentUniform(0, &color, sizeof(color));
+
         Engine::Instance().GetRenderer().Draw(vb->GetVertexCount());
 
         Engine::Instance().GetRenderer().EndFrame();
