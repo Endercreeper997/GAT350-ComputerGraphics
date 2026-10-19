@@ -5,6 +5,7 @@
 #include <rapidjson/document.h>
 #include <string>
 #include <vector>
+#include <glm/glm.hpp>
 
 #define JSON_READ(value, data) nu::json::Read(value, #data, data)
 #define JSON_READ_NAME(value, name, data) nu::json::Read(value, name, data)

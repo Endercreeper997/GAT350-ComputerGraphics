@@ -175,7 +175,7 @@ namespace nu::json
 
         return true;
     }
-
+    
     bool Read(const value_t& value, const std::string& name, std::vector<int>& data, bool required)
     {
         // check if the value has the "<name>" and is an array with 3 elements

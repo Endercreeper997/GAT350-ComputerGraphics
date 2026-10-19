@@ -24,30 +24,7 @@ namespace nu
 
 	void SpriteRendererComponent::Draw(const Renderer& renderer)
 	{
-		if (m_texture)
-		{
-			if (m_sourceRect.w > 0 && m_sourceRect.h > 0)
-			{
-				renderer.DrawTexture(*m_texture,
-					m_sourceRect,
-					GetOwner()->GetTransform().position.x,
-					GetOwner()->GetTransform().position.y,
-					GetOwner()->GetTransform().rotation,
-					GetOwner()->GetTransform().scale,
-					m_flipH,
-					m_origin);
-			}
-			else
-			{
-				renderer.DrawTexture(*m_texture,
-					GetOwner()->GetTransform().position.x,
-					GetOwner()->GetTransform().position.y,
-					GetOwner()->GetTransform().rotation,
-					GetOwner()->GetTransform().scale,
-					m_flipH,
-					m_origin);
-			}
-		}
+		// 
 	}
 
 	void SpriteRendererComponent::Read(const json::value_t& value)

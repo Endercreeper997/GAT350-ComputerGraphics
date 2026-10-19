@@ -4,6 +4,7 @@
 #include "Texture.h"
 #include "Pipeline.h"
 #include "VertexBuffer.h"
+#include "IndexBuffer.h"
 
 #include "Math/Transform.h"
 #include "Math/MathUtils.h"
@@ -92,7 +93,7 @@ namespace nu
             // configure the color target attachments (This handles clearing the screen)
             SDL_GPUColorTargetInfo color_target_info{};
             color_target_info.texture = swapchainTexture;
-            color_target_info.clear_color = SDL_FColor{ 1.0f, 0.0f, 0.0f, 1.0f };
+            color_target_info.clear_color = SDL_FColor{ 0.2f, 0.2f, 0.2f, 1.0f };
             color_target_info.load_op = SDL_GPU_LOADOP_CLEAR;
             color_target_info.store_op = SDL_GPU_STOREOP_STORE;
 
@@ -144,32 +145,7 @@ namespace nu
         SDL_RenderRect(m_renderer, &rect);
     }
 
-    void Renderer::DrawModel(const Model& model, const Transform& transform) const
-    {
-        for (auto mesh : model.GetMeshes())
-        {
-            SetColor(mesh.GetColor().r, mesh.GetColor().g, mesh.GetColor().b, 1.0f);
-            auto& points = mesh.GetPoints();
-            for (int i = 0; i + 1 < points.size(); i++)
-            {
-                // local space
-                Vector2 v1 = points[i];
-                Vector2 v2 = points[i + 1];
-
-                // convert to world space
-                v1 *= transform.scale;
-                v2 *= transform.scale;
-
-                v1 = v1.Rotate(transform.rotation * DegToRad);
-                v2 = v2.Rotate(transform.rotation * DegToRad);
-
-                v1 += transform.position;
-                v2 += transform.position;
-
-                DrawLine(v1.x, v1.y, v2.x, v2.y);
-            }
-        }
-    }
+    
 
     void Renderer::DrawTexture(const Texture& texture, float x, float y, float angle, float scale, bool flipH, const Vector2& origin) const
     {
@@ -242,6 +218,28 @@ namespace nu
         );
     }
 
+    void Renderer::SetIndexBuffer(const IndexBuffer& indexBuffer)
+    {
+        // describe which buffer to bind and where to start reading from
+        SDL_GPUBufferBinding binding{
+            .buffer = indexBuffer.m_gpuBuffer, // todo: the vertex buffer's gpu buffer
+            .offset = 0   // start reading at the beginning of the buffer
+        };
+
+        // bind the vertex buffer to the current render pass with SDL_BindGPUIndexBuffer()
+        // the draw calls that follow read their indices from this buffer
+        // parameters:
+        //   render pass   - the current render pass (m_renderPass)
+        //   bindings      - pointer to the binding above
+        //   element size  - 16-bit or 32-bit
+
+        SDL_BindGPUIndexBuffer(
+            m_renderPass,
+            &binding,
+            SDL_GPU_INDEXELEMENTSIZE_32BIT
+        );
+    }
+
     void Renderer::Draw(uint32_t vertexCount)
     {
         // draw using the currently bound pipeline and vertex buffer with SDL_DrawGPUPrimitives()
@@ -256,6 +254,17 @@ namespace nu
             m_renderPass,
             vertexCount,
             1,
+            0,
+            0
+        );
+    }
+    void Renderer::DrawIndex(const IndexBuffer& indexBuffer)
+    {
+        SDL_DrawGPUIndexedPrimitives(
+            m_renderPass,
+            indexBuffer.GetIndexCount(),
+            1,
+            0,
             0,
             0
         );

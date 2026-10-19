@@ -46,7 +46,7 @@ namespace nu
 			},
 
 			// how vertices are assembled into shapes, every 3 vertices form one triangle
-			.primitive_type = SDL_GPU_PRIMITIVETYPE_POINTLIST, // todo: SDL_GPU_PRIMITIVETYPE_...
+			.primitive_type = SDL_GPU_PRIMITIVETYPE_TRIANGLELIST, // todo: SDL_GPU_PRIMITIVETYPE_...
 
 			// controls how triangles are turned into pixels
 			.rasterizer_state = SDL_GPURasterizerState{
@@ -104,5 +104,9 @@ namespace nu
 
 		// add the attribute to m_vertexAttributes
 		m_vertexAttributes.push_back(attribute);
+	}
+	void Pipeline::AddIndexBuffer()
+	{
+
 	}
 }

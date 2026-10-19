@@ -83,7 +83,7 @@ namespace nu
 
         if (JSON_HAS_NAME(value, "transform"))
         {
-            m_transform.Read(JSON_GET_NAME(value, "transform"));
+            //m_transform.Read(JSON_GET_NAME(value, "transform"));
         }
 
         JSON_READ_NAME(value, "tag", m_tag);
