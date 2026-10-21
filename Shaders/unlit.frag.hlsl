@@ -16,7 +16,10 @@ struct Output
 Output main(Input input)
 {
 	Output output;
-    output.color = color; 
+    //output.color = u_texture.Sample(u_sampler, input.texcoord) * color; 
+    
+    //old code v
+    output.color = color;
 
 	return output;
 }

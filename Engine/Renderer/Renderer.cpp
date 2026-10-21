@@ -99,8 +99,17 @@ namespace nu
             color_target_info.load_op = SDL_GPU_LOADOP_CLEAR;
             color_target_info.store_op = SDL_GPU_STOREOP_STORE;
 
-            m_renderPass = SDL_BeginGPURenderPass(m_commandBuffer, &color_target_info, 1, nullptr);
-            //SDL_EndGPURenderPass(m_renderPass);
+            // configure the depth target (This handles the depth sorting)
+            SDL_GPUDepthStencilTargetInfo depth_target_info = {};
+            depth_target_info.texture = m_depthTexture;
+            depth_target_info.clear_depth = 1.0f;
+            depth_target_info.load_op = SDL_GPU_LOADOP_CLEAR;
+            depth_target_info.store_op = SDL_GPU_STOREOP_DONT_CARE;
+            depth_target_info.stencil_load_op = SDL_GPU_LOADOP_DONT_CARE;
+            depth_target_info.stencil_store_op = SDL_GPU_STOREOP_DONT_CARE;
+
+            m_renderPass = SDL_BeginGPURenderPass(m_commandBuffer, &color_target_info, 1, &depth_target_info);
+            
         }
 
         return true;
@@ -294,6 +303,6 @@ namespace nu
         .sample_count = SDL_GPU_SAMPLECOUNT_1
         };
 
-        SDL_CreateGPUTexture(m_gpuDevice, &depthInfo);
+        m_depthTexture = SDL_CreateGPUTexture(m_gpuDevice, &depthInfo);
     }
 }

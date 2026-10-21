@@ -16,30 +16,30 @@
 
 using namespace nu;
 
-namespace nu 
-{
-    struct Color4
-    {
-        float r, g, b, a;
-    };
-}
+//namespace nu 
+//{
+//    struct Color4
+//    {
+//        float r, g, b, a;
+//    };
+//}
+//
+//struct Vertex
+//{
+//    Vector3 position;
+//    Color4 color;
+//    
+//};
+//
+//std::vector<Vertex> vertices =
+//{
+//    Vertex{ Vector3{  -1.0f, -1.0f, 0.0f}, Color4{ 0, 1, 0, 1 } },   // Bottom-Left
+//    Vertex{  Vector3{  0.8f,  0.8f, 0.0f}, Color4{ 1, 1, 0, 1 } },     // Bottom-Right
+//    Vertex{  Vector3{  0.4f, -0.3f, 0.0f}, Color4{ 1, 0, 1, 1 } },   // Top-Right
+//    //Vertex{  Vector3{  -0.4f, 0.3f, 0.0f}, Color4{ 1, 1, 0.5, 1 } },   // Top-Left
+//};
 
-struct Vertex
-{
-    Vector3 position;
-    Color4 color;
-    
-};
-
-std::vector<Vertex> vertices =
-{
-    Vertex{ Vector3{  -1.0f, -1.0f, 0.0f}, Color4{ 0, 1, 0, 1 } },   // Bottom-Left
-    Vertex{  Vector3{  0.8f,  0.8f, 0.0f}, Color4{ 1, 1, 0, 1 } },     // Bottom-Right
-    Vertex{  Vector3{  0.4f, -0.3f, 0.0f}, Color4{ 1, 0, 1, 1 } },   // Top-Right
-    //Vertex{  Vector3{  -0.4f, 0.3f, 0.0f}, Color4{ 1, 1, 0.5, 1 } },   // Top-Left
-};
-
-std::vector<uint32_t> indices = { 0, 1, 2, 2, 3, 0 };
+//std::vector<uint32_t> indices = { 0, 1, 2, 2, 3, 0 };
 
 int main()
 {

@@ -26,8 +26,8 @@ namespace nu
 		void DrawFillRect(float x, float y, float w, float h) const;
 		void DrawRect(float x, float y, float w, float h) const;
 
-		/*void DrawTexture(const class Texture& texture, float x, float y, float angle = 0.0f, float scale = 1.0f, bool flipH = false, const Vector2& origin = Vector2{ 0.5f, 0.5f }) const;
-		void DrawTexture(const class Texture& texture, const struct Rect& source, float x, float y, float angle = 0.0f, float scale = 1.0f, bool flipH = false, const Vector2& origin = Vector2{ 0.5f, 0.5f }) const;*/
+		void DrawTexture(const class Texture& texture, float x, float y, float angle = 0.0f, float scale = 1.0f, bool flipH = false, const Vector2& origin = Vector2{ 0.5f, 0.5f }) const;
+		void DrawTexture(const class Texture& texture, const struct Rect& source, float x, float y, float angle = 0.0f, float scale = 1.0f, bool flipH = false, const Vector2& origin = Vector2{ 0.5f, 0.5f }) const;
 
 		int GetWidth() const { return m_width; }
 		int GetHeight() const { return m_height; }
@@ -65,6 +65,7 @@ namespace nu
 		SDL_GPUDevice* m_gpuDevice = nullptr;
 		SDL_GPUCommandBuffer* m_commandBuffer = nullptr;
 		SDL_GPURenderPass* m_renderPass = nullptr;
+		SDL_GPUTexture* m_depthTexture = nullptr;
 
 		bool m_cameraEnabled = true;
 		Vector2 m_camera;
