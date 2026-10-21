@@ -15,6 +15,7 @@ namespace nu
 		uint32_t GetIndexCount() const { return m_IndexCount; }
 
 		friend class Renderer;
+		friend class Model;
 
 	private:
 		uint32_t m_IndexCount{ 0 };
