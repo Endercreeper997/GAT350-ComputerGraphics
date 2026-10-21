@@ -40,6 +40,8 @@ namespace nu
 
         std::cout << "GPU Driver: " << SDL_GetGPUDeviceDriver(m_gpuDevice) << std::endl;
 
+        CreateDepthBuffer();
+
         return true;
     }
 
@@ -278,5 +280,20 @@ namespace nu
     {
         SDL_PushGPUFragmentUniformData(m_commandBuffer, slot, data, size);
 
+    }
+    void Renderer::CreateDepthBuffer()
+    {
+        SDL_GPUTextureCreateInfo depthInfo{
+        .type = SDL_GPU_TEXTURETYPE_2D,
+        .format = SDL_GPU_TEXTUREFORMAT_D32_FLOAT,
+        .usage = SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET,
+        .width = m_width,
+        .height = m_height,
+        .layer_count_or_depth = 1,
+        .num_levels = 1,
+        .sample_count = SDL_GPU_SAMPLECOUNT_1
+        };
+
+        SDL_CreateGPUTexture(m_gpuDevice, &depthInfo);
     }
 }

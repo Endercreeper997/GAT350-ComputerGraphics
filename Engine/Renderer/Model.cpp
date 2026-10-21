@@ -36,13 +36,13 @@ namespace nu
 		{
 			// todo: set the mesh vertex buffer on the renderer with renderer.SetVertexBuffer(vertexBuffer)
 			// the buffers are stored as unique_ptr, so dereference them with *
-			renderer.SetVertexBuffer(*vertexBuffer);
+			renderer.SetVertexBuffer(*mesh.vertexBuffer);
 
 			// todo: set the mesh index buffer on the renderer with renderer.SetIndexBuffer(indexBuffer)
-			renderer.SetIndexBuffer(indexBuffer);
+			renderer.SetIndexBuffer(*mesh.indexBuffer);
 
 			// todo: draw the mesh with renderer.DrawIndex(indexBuffer)
-			renderer.DrawIndex(indexBuffer);
+			renderer.DrawIndex(*mesh.indexBuffer);
 		}
 	}
 
@@ -63,7 +63,7 @@ namespace nu
 		{
 			// todo: process the child node with ProcessNode(child, scene, renderer)
 			// the children are stored in node->mChildren, this is recursive so every node in the tree gets processed
-			ProcessNode(node->mChildren, scene, renderer);
+			ProcessNode(node->mChildren[i], scene, renderer);
 		}
 	}
 
@@ -79,7 +79,7 @@ namespace nu
 
 			// todo: set vertex.position from mesh->mVertices[i] (x, y, z)
 			// a mesh always has positions, so no null check is needed
-			vertex.position = mesh->mVertices[i](x, y, z);
+			vertex.position = glm::vec3{ mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z };
 
 			// texcoords are optional, use (0, 0) if the mesh doesn't have them
 			vertex.texcoord = (mesh->mTextureCoords[0])
@@ -88,11 +88,15 @@ namespace nu
 
 			// todo: set vertex.normal from mesh->mNormals[i] (x, y, z)
 			// normals are optional, use (0, 0, 0) if mesh->mNormals is null (see texcoord above)
-			vertex.normal = from mesh->mNormals[i](x, y, z);
+				vertex.normal = (mesh->mNormals)
+					? glm::vec3{ mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z }
+					: glm::vec3{ 0, 0, 0 };
 
 			// todo: set vertex.tangent from mesh->mTangents[i] (x, y, z)
 			// tangents are optional, use (0, 0, 0) if mesh->mTangents is null (see texcoord above)
-			vertex.tangent = mesh->mTangents[i](x, y, z);
+			vertex.tangent = (mesh->mTangents)
+				? glm::vec3{ mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z }
+				: glm::vec3{ 0, 0, 0 };
 
 			vertices.push_back(vertex);
 		}
@@ -133,6 +137,6 @@ namespace nu
 
 		// todo: add newMesh to m_meshes
 		// Mesh holds unique_ptrs so it can't be copied, use std::move(newMesh)
-		std::move(newMesh);
+		m_meshes.push_back(std::move(newMesh));
 	}
 }
