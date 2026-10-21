@@ -5,6 +5,7 @@
 #include "Renderer/VertexBuffer.h"
 #include "Renderer/IndexBuffer.h"
 #include "Renderer/Pipeline.h"
+#include "Renderer/Model.h"
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
@@ -16,30 +17,30 @@
 
 using namespace nu;
 
-//namespace nu 
-//{
-//    struct Color4
-//    {
-//        float r, g, b, a;
-//    };
-//}
-//
-//struct Vertex
-//{
-//    Vector3 position;
-//    Color4 color;
-//    
-//};
-//
-//std::vector<Vertex> vertices =
-//{
-//    Vertex{ Vector3{  -1.0f, -1.0f, 0.0f}, Color4{ 0, 1, 0, 1 } },   // Bottom-Left
-//    Vertex{  Vector3{  0.8f,  0.8f, 0.0f}, Color4{ 1, 1, 0, 1 } },     // Bottom-Right
-//    Vertex{  Vector3{  0.4f, -0.3f, 0.0f}, Color4{ 1, 0, 1, 1 } },   // Top-Right
-//    //Vertex{  Vector3{  -0.4f, 0.3f, 0.0f}, Color4{ 1, 1, 0.5, 1 } },   // Top-Left
-//};
+namespace nu 
+{
+    struct Color4
+    {
+        float r, g, b, a;
+    };
+}
 
-//std::vector<uint32_t> indices = { 0, 1, 2, 2, 3, 0 };
+struct Vertex
+{
+    Vector3 position;
+    Color4 color;
+    
+};
+
+std::vector<Vertex> vertices =
+{
+    Vertex{ Vector3{  -1.0f, -1.0f, 0.0f}, Color4{ 0, 1, 0, 1 } },   // Bottom-Left
+    Vertex{  Vector3{  0.8f,  0.8f, 0.0f}, Color4{ 1, 1, 0, 1 } },     // Bottom-Right
+    Vertex{  Vector3{  0.4f, -0.3f, 0.0f}, Color4{ 1, 0, 1, 1 } },   // Top-Right
+    //Vertex{  Vector3{  -0.4f, 0.3f, 0.0f}, Color4{ 1, 1, 0.5, 1 } },   // Top-Left
+};
+
+std::vector<uint32_t> indices = { 0, 1, 2, 2, 3, 0 };
 
 int main()
 {
@@ -48,12 +49,31 @@ int main()
     // INITIALIZATION
     Engine::Instance().Initialize();
 
+    // Model rendering
+    auto model = Resources().Get<Model>("models/suzanne.obj", Engine::Instance().GetRenderer());
+
+    auto vshader = Resources().Get<nu::Shader>("shaders/unlit.vert", Engine::Instance().GetRenderer(), 1);
+    auto fshader = Resources().Get<nu::Shader>("shaders/unlit.frag", Engine::Instance().GetRenderer(), 1);
+
+    auto pipeline = std::make_shared<Pipeline>();
+
+    pipeline->AddVertexBuffer(sizeof(Model::Vertex));
+    pipeline->AddVertexAttribute(0, SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3, offsetof(Model::Vertex, position));
+    pipeline->AddVertexAttribute(1, SDL_GPU_VERTEXELEMENTFORMAT_FLOAT2, offsetof(Model::Vertex, texcoord));
+    pipeline->AddVertexAttribute(2, SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3, offsetof(Model::Vertex, normal));
+    pipeline->AddVertexAttribute(3, SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3, offsetof(Model::Vertex, tangent));
+
+    pipeline->Create(*vshader.get(), *fshader.get(),
+        Engine::Instance().GetRenderer().GetGPUDevice(),
+        Engine::Instance().GetRenderer().GetWindow());
+
+    /*
     // Triangle rendering
     auto vb = std::make_shared<VertexBuffer>();
     vb->Create<Vertex>(vertices, Engine::Instance().GetRenderer());
 
     auto ib = std::make_shared<IndexBuffer>();
-    ib->Create(static_cast<uint32_t>(indices.size()), indices.size(), indices.data(), Engine::Instance().GetRenderer());
+    ib->Create(static_cast<uint32_t>(indices.size()), indices.data(), Engine::Instance().GetRenderer());
 
     auto vshader = Resources().Get<nu::Shader>("shaders/position.vert", Engine::Instance().GetRenderer(), 1);
     auto fshader = Resources().Get<nu::Shader>("shaders/color.frag", Engine::Instance().GetRenderer(), 1);
@@ -74,6 +94,7 @@ int main()
     pipeline->Create(*vshader.get(), *fshader.get(),
         Engine::Instance().GetRenderer().GetGPUDevice(),
         Engine::Instance().GetRenderer().GetWindow());
+    */
 
     Color4 color{ 0, 0, 0, 1 };
     // GLM
@@ -114,11 +135,13 @@ int main()
 
         //color.r = sin(time * 10.0f) * 0.5f + 0.5f;
 
-        glm::vec3 direction{ 0.0f, 0, 0 };
+        glm::vec3 direction{ 0, 0, 0 };
         if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_A)) direction.x = -1;
         if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_D)) direction.x = +1;
+        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_W)) direction.z = -1;
+        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_S)) direction.z = +1;
 
-        cameraPosition += direction + 4.0f * dt;
+        cameraPosition += (direction * 4.0f) * dt;
         
         // TRANSFORM
         transform.rotation.z = time * 90;
@@ -138,13 +161,10 @@ int main()
         Engine::Instance().GetRenderer().BeginFrame();
 
         Engine::Instance().GetRenderer().SetPipeline(*pipeline);
-
-        Engine::Instance().GetRenderer().SetVertexBuffer(*vb);
         Engine::Instance().GetRenderer().SetVertexUniform(0, &uniform, sizeof(uniform));
         Engine::Instance().GetRenderer().SetFragmentUniform(0, &color, sizeof(color));
 
-        //Engine::Instance().GetRenderer().Draw(vb->GetVertexCount());
-        Engine::Instance().GetRenderer().DrawIndex(*ib);
+        model->Draw(Engine::Instance().GetRenderer());
 
         Engine::Instance().GetRenderer().EndFrame();
     }

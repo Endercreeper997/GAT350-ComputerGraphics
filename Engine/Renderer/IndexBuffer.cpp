@@ -14,7 +14,7 @@ namespace nu
 		}
 	}
 
-	bool IndexBuffer::Create(uint32_t IndexCount, uint32_t indexSize, const uint32_t* data, const Renderer& renderer)
+	bool IndexBuffer::Create(uint32_t IndexCount, /*uint32_t indexSize,*/ const uint32_t* data, const Renderer& renderer)
 	{
 		// store the Index count in m_IndexCount (needed later when drawing)
 		// store the gpu device in m_gpuDevice so the destructor can release the buffer later
@@ -22,7 +22,7 @@ namespace nu
 		m_gpuDevice = renderer.m_gpuDevice;
 
 		// calculate the total size in bytes of all the indices (number of indices * size of one Index)
-		uint32_t indicesSize = IndexCount * indexSize;
+		uint32_t indicesSize = IndexCount * sizeof(uint32_t);
 
 		// --- create the Index buffer ---
 		// this buffer lives in gpu memory, the cpu can't write to it directly
@@ -147,8 +147,8 @@ namespace nu
 		return true;
 	}
 
-	/*bool IndexBuffer::Create(std::vector<uint32_t> indices, const Renderer& renderer)
+	bool IndexBuffer::Create(std::vector<uint32_t> indices, const Renderer& renderer)
 	{
 		return Create(static_cast<uint32_t>(indices.size()), indices.data(), renderer);
-	}*/
+	}
 }
