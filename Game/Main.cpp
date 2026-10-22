@@ -54,8 +54,8 @@ int main()
     auto model = Resources().Get<Model>("models/spot.obj", Engine::Instance().GetRenderer());
     auto texture = Resources().Get<Texture>("textures/spot_diffuse.png", Engine::Instance().GetRenderer());
 
-    auto vshader = Resources().Get<nu::Shader>("shaders/unlit.vert", Engine::Instance().GetRenderer(), 1);
-    auto fshader = Resources().Get<nu::Shader>("shaders/unlit.frag", Engine::Instance().GetRenderer(), 1, 1);
+    auto vshader = Resources().Get<nu::Shader>("shaders/lit.vert", Engine::Instance().GetRenderer(), 2);
+    auto fshader = Resources().Get<nu::Shader>("shaders/lit.frag", Engine::Instance().GetRenderer(), 1, 1);
 
     auto pipeline = std::make_shared<Pipeline>();
 
@@ -69,43 +69,26 @@ int main()
         Engine::Instance().GetRenderer().GetGPUDevice(),
         Engine::Instance().GetRenderer().GetWindow());
 
-    /*
-    // Triangle rendering
-    auto vb = std::make_shared<VertexBuffer>();
-    vb->Create<Vertex>(vertices, Engine::Instance().GetRenderer());
 
-    auto ib = std::make_shared<IndexBuffer>();
-    ib->Create(static_cast<uint32_t>(indices.size()), indices.data(), Engine::Instance().GetRenderer());
-
-    auto vshader = Resources().Get<nu::Shader>("shaders/position.vert", Engine::Instance().GetRenderer(), 1);
-    auto fshader = Resources().Get<nu::Shader>("shaders/color.frag", Engine::Instance().GetRenderer(), 1);
-
-    auto pipeline = std::make_shared<Pipeline>();
-    pipeline->AddVertexBuffer(sizeof(Vertex));
-    //position
-    pipeline->AddVertexAttribute(
-        0,
-        SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3,
-        offsetof(Vertex, position));
-    //color
-    pipeline->AddVertexAttribute(
-        1,
-        SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
-        offsetof(Vertex, color));
-
-    pipeline->Create(*vshader.get(), *fshader.get(),
-        Engine::Instance().GetRenderer().GetGPUDevice(),
-        Engine::Instance().GetRenderer().GetWindow());
-    */
-
-    Color4 color{ 0, 0, 0, 1 };
+   
+    //UNIFORMS
+    Color4 color{ 1, 1, 1, 1 };
     // GLM
     struct vertexUniform
     {
         glm::mat4 mvp;
     };
+    vertexUniform vertexUniform;
 
-    vertexUniform uniform;
+    struct LightUniform
+    {
+        glm::vec3 ambient;
+    };
+
+    LightUniform lightUniform{
+        .ambient{ 1.0f }
+    };
+
     glm::vec3 cameraPosition{ 0, 0, 5 };
 
     Transform transform;
@@ -156,14 +139,15 @@ int main()
         auto projection = glm::perspective(glm::radians(70.0f), aspectRatio, 0.01f, 20.0f);
 
         // MVP
-        uniform.mvp = projection * view * transform.GetMatrix();
+        vertexUniform.mvp = projection * view * transform.GetMatrix();
 
 
         // RENDER
         Engine::Instance().GetRenderer().BeginFrame();
 
         Engine::Instance().GetRenderer().SetPipeline(*pipeline);
-        Engine::Instance().GetRenderer().SetVertexUniform(0, &uniform, sizeof(uniform));
+        Engine::Instance().GetRenderer().SetVertexUniform(0, &vertexUniform, sizeof(vertexUniform));
+        Engine::Instance().GetRenderer().SetVertexUniform(1, &lightUniform, sizeof(lightUniform));
         Engine::Instance().GetRenderer().SetFragmentUniform(0, &color, sizeof(color));
         Engine::Instance().GetRenderer().SetFragmentTexture(0, *texture);
 
