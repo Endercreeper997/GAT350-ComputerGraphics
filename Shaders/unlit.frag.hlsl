@@ -1,3 +1,6 @@
+Texture2D<float4> u_texture : register(t0, space2);
+SamplerState u_sampler : register(s0, space2);
+
 cbuffer Uniforms : register(b0, space3)
 {
     float4 color;
@@ -16,10 +19,7 @@ struct Output
 Output main(Input input)
 {
 	Output output;
-    //output.color = u_texture.Sample(u_sampler, input.texcoord) * color; 
+    output.color = u_texture.Sample(u_sampler, input.texcoord) * color; 
     
-    //old code v
-    output.color = color;
-
 	return output;
 }

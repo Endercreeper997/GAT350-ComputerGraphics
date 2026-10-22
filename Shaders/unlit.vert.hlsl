@@ -1,7 +1,7 @@
 cbuffer Uniforms : register(b0, space1)
 {
     float4x4 mvp;
-}
+};
 
 struct Input
 {
@@ -13,7 +13,6 @@ struct Output
 {
     float4 position : SV_Position;
     float2 texcoord : TEXCOORD0;
-    
 };
 
 Output main(Input input)
@@ -21,6 +20,5 @@ Output main(Input input)
     Output output;
     output.texcoord = input.texcoord;
     output.position = mul(mvp, float4(input.position, 1.0f));
-
     return output;
 }

@@ -180,10 +180,6 @@
     <ClInclude Include="Components\Component.h" />
     <ClInclude Include="Components\PhysicsComponent.h" />
     <ClInclude Include="Components\RendererComponent.h" />
-    <ClInclude Include="Components\SpriteAnimationRendererComponent.h" />
-    <ClInclude Include="Components\SpriteAnimatorRendererComponent.h" />
-    <ClInclude Include="Components\SpriteRendererComponent.h" />
-    <ClInclude Include="Components\TextRendererComponent.h" />
     <ClInclude Include="Core\Factory.h" />
     <ClInclude Include="Core\File.h" />
     <ClInclude Include="Core\GameTime.h" />
@@ -210,10 +206,7 @@
     <ClInclude Include="Renderer\Pipeline.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\Shader.h" />
-    <ClInclude Include="Renderer\TextRenderer.h" />
     <ClInclude Include="Renderer\Texture.h" />
-    <ClInclude Include="Renderer\TextureFrames.h" />
-    <ClInclude Include="Renderer\Tilemap.h" />
     <ClInclude Include="Renderer\VertexBuffer.h" />
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\ResourceManager.h" />
@@ -222,10 +215,6 @@
   <ItemGroup>
     <ClCompile Include="Audio\Audio.cpp" />
     <ClCompile Include="Components\PhysicsComponent.cpp" />
-    <ClCompile Include="Components\SpriteAnimationRendererComponent.cpp" />
-    <ClCompile Include="Components\SpriteAnimatorRendererComponent.cpp" />
-    <ClCompile Include="Components\SpriteRendererComponent.cpp" />
-    <ClCompile Include="Components\TextRendererComponentcpp.cpp" />
     <ClCompile Include="Core\File.cpp" />
     <ClCompile Include="Core\GameTime.cpp" />
     <ClCompile Include="Engine.cpp" />
@@ -247,10 +236,7 @@
     <ClCompile Include="Renderer\Pipeline.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Renderer\Shader.cpp" />
-    <ClCompile Include="Renderer\TextRenderer.cpp" />
     <ClCompile Include="Renderer\Texture.cpp" />
-    <ClCompile Include="Renderer\TextureFrames.cpp" />
-    <ClCompile Include="Renderer\Tilemap.cpp" />
     <ClCompile Include="Renderer\VertexBuffer.cpp" />
     <ClCompile Include="Serialization\Json.cpp" />
   </ItemGroup>
