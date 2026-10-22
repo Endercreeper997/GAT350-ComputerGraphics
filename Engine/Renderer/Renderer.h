@@ -49,7 +49,7 @@ namespace nu
 		void SetVertexUniform(uint32_t slot, const void* data, uint32_t size);
 		void SetFragmentUniform(uint32_t slot, const void* data, uint32_t size);
 
-		//void CreateDepthBuffer();
+		void CreateDepthBuffer();
 
 		friend class TextRenderer;
 		friend class Texture;

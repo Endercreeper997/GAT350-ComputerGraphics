@@ -3,13 +3,13 @@ SamplerState u_sampler : register(s0, space2);
 
 cbuffer Uniforms : register(b0, space3)
 {
-    float4 color;
+    float4 tint;
 }
 
 struct Input
 {
     float2 texcoord : TEXCOORD0;
-    float4 color : TEXCOORD1;
+    float3 diffuse : TEXCOORD1;
 };
 
 struct Output
@@ -20,8 +20,8 @@ struct Output
 Output main(Input input)
 {
 	Output output;
-    output.color = u_texture.Sample(u_sampler, input.texcoord) * input.color;
+    float4 albedo = u_texture.Sample(u_sampler, input.texcoord) * tint;
+    output.color = float4(albedo.rgb * input.diffuse, albedo.a);
     
-
 	return output;
 }

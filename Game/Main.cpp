@@ -72,7 +72,7 @@ int main()
 
    
     //UNIFORMS
-    Color4 color{ 1, 1, 1, 1 };
+    Color4 color{ 1, 0, 0.2, 1 };
     // GLM
     struct vertexUniform
     {
@@ -86,7 +86,7 @@ int main()
     };
 
     LightUniform lightUniform{
-        .ambient{ 1.0f }
+        .ambient{ 0.3f }
     };
 
     glm::vec3 cameraPosition{ 0, 0, 5 };
@@ -118,7 +118,7 @@ int main()
         float dt = Engine::Instance().GetTime().GetDeltaTime();
         float time = Engine::Instance().GetTime().GetTime();
 
-        //color.r = sin(time * 10.0f) * 0.5f + 0.5f;
+        color.r = sin(time * 30.0f) * 0.5f + 0.5f;
 
         glm::vec3 direction{ 0, 0, 0 };
         if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_A)) direction.x = -1;
@@ -129,7 +129,7 @@ int main()
         cameraPosition += (direction * 4.0f) * dt;
         
         // TRANSFORM
-        transform.rotation.z = time * 90;
+        transform.rotation.y = time * 900;
 
         // VIEW MATRIX
         auto view = glm::lookAtRH(cameraPosition, cameraPosition + glm::vec3{ 0, 0, -1 }, glm::vec3{ 0, 1, 0 });
