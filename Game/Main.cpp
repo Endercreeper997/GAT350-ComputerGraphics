@@ -72,21 +72,30 @@ int main()
 
    
     //UNIFORMS
-    Color4 color{ 1, 0, 0.2, 1 };
+    Color4 tint{ 1, 1, 1, 1 };
     // GLM
     struct vertexUniform
     {
         glm::mat4 mvp;
+        glm::mat4 model;
     };
     vertexUniform vertexUniform;
 
     struct LightUniform
     {
+        glm::vec3 lightDirection;
+        float padding1;
+        glm::vec3 lightColor;
+        float lightIntensity;
         glm::vec3 ambient;
+        float padding2;
     };
 
     LightUniform lightUniform{
-        .ambient{ 0.3f }
+        .lightDirection{ 0, -1, 0 },
+        .lightColor{ 0, 0, 1 },
+        .lightIntensity{ 1 },
+        .ambient{ 0.1f }
     };
 
     glm::vec3 cameraPosition{ 0, 0, 5 };
@@ -118,7 +127,7 @@ int main()
         float dt = Engine::Instance().GetTime().GetDeltaTime();
         float time = Engine::Instance().GetTime().GetTime();
 
-        color.r = sin(time * 30.0f) * 0.5f + 0.5f;
+        //color.r = sin(time * 30.0f) * 0.5f + 0.5f;
 
         glm::vec3 direction{ 0, 0, 0 };
         if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_A)) direction.x = -1;
@@ -129,7 +138,7 @@ int main()
         cameraPosition += (direction * 4.0f) * dt;
         
         // TRANSFORM
-        transform.rotation.y = time * 900;
+        transform.rotation.y = time * 50;
 
         // VIEW MATRIX
         auto view = glm::lookAtRH(cameraPosition, cameraPosition + glm::vec3{ 0, 0, -1 }, glm::vec3{ 0, 1, 0 });
@@ -139,7 +148,8 @@ int main()
         auto projection = glm::perspective(glm::radians(70.0f), aspectRatio, 0.01f, 20.0f);
 
         // MVP
-        vertexUniform.mvp = projection * view * transform.GetMatrix();
+        vertexUniform.model = transform.GetMatrix();
+        vertexUniform.mvp = projection * view * vertexUniform.model;
 
 
         // RENDER
@@ -148,7 +158,7 @@ int main()
         Engine::Instance().GetRenderer().SetPipeline(*pipeline);
         Engine::Instance().GetRenderer().SetVertexUniform(0, &vertexUniform, sizeof(vertexUniform));
         Engine::Instance().GetRenderer().SetVertexUniform(1, &lightUniform, sizeof(lightUniform));
-        Engine::Instance().GetRenderer().SetFragmentUniform(0, &color, sizeof(color));
+        Engine::Instance().GetRenderer().SetFragmentUniform(0, &tint, sizeof(tint));
         Engine::Instance().GetRenderer().SetFragmentTexture(0, *texture);
 
         model->Draw(Engine::Instance().GetRenderer());
