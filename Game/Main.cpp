@@ -16,6 +16,9 @@
 
 #include "Resources/ResourceManager.h"
 
+#define CHECK_UNIFORM_BOUNDARY(T) static_assert((sizeof(T) % 16) == 0);
+
+
 using namespace nu;
 
 enum class LightType : uint32_t
@@ -86,7 +89,9 @@ int main()
         glm::mat4 mvp;
         glm::mat4 model;
         glm::vec3 cameraPosition;
+        float padding1;
     };
+    CHECK_UNIFORM_BOUNDARY(vertexUniform);
     vertexUniform vertexUniform;
 
     struct LightUniform
@@ -94,23 +99,29 @@ int main()
         glm::vec3 position;
         uint32_t type;
         glm::vec3 direction;
-        float innerCutoff;
+        float range;
         glm::vec3 color;
-        float lightIntensity;
+        float intensity;
         glm::vec3 ambient;
+        float innerCutoff;
         float outerCutoff;
+        glm::vec3 padding;
     };
+    CHECK_UNIFORM_BOUNDARY(LightUniform);
 
     LightUniform lightUniform{
         .position{ 10, 10, 10 },
         .type{ (uint32_t)LightType::Point },
         .direction{ 0, -1, 0 },
-        .innerCutoff{ 0.3f },
+        .range{ 400 },
         .color{ 1, 1, 1 },
-        .lightIntensity{ 1 },
+        .intensity{ 1 },
         .ambient{ 0.1f },
-        .outerCutoff{ 0.6f }
+        .innerCutoff{ 0.3f },
+        .outerCutoff{ 1.6f }
     };
+
+
 
     struct MaterialUniform
     {
@@ -118,7 +129,9 @@ int main()
         glm::float2 tiling;
         glm::float2 offset;
         float shininess;
+        glm::vec3 padding;
     };
+    CHECK_UNIFORM_BOUNDARY(MaterialUniform);
 
     MaterialUniform materialUniform
     {
@@ -170,8 +183,11 @@ int main()
 
         if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_3))
         {
-            //lightUniform.type = LightType::Spot;
-
+            lightUniform.type = (uint32_t)LightType::Spot;
+            lightUniform.position = glm::vec3{ 0, 20, 0 };
+            lightUniform.innerCutoff = glm::cos(glm::radians(30.0f));
+            lightUniform.outerCutoff = glm::cos(glm::radians(60.0f));
+            
         }
 
 
@@ -202,7 +218,10 @@ int main()
         Engine::Instance().GetRenderer().SetVertexUniform(1, &lightUniform, sizeof(lightUniform));
         Engine::Instance().GetRenderer().SetVertexUniform(2, &materialUniform, sizeof(materialUniform));
 
-        Engine::Instance().GetRenderer().SetFragmentUniform(0, &materialUniform, sizeof(materialUniform));
+        Engine::Instance().GetRenderer().SetFragmentUniform(0, &vertexUniform, sizeof(vertexUniform));
+        //Engine::Instance().GetRenderer().SetFragmentUniform(1, &lightUniform, sizeof(lightUniform));
+        //Engine::Instance().GetRenderer().SetFragmentUniform(2, &materialUniform, sizeof(materialUniform));
+
         Engine::Instance().GetRenderer().SetFragmentTexture(0, *texture);
 
         model->Draw(Engine::Instance().GetRenderer());

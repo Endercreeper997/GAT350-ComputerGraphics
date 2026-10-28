@@ -39,11 +39,15 @@ Output main(Input input)
     output.texcoord = (input.texcoord * material.tiling) + material.offset;
     output.position = mul(mvp, float4(input.position, 1.0f));
     
-    float3 worldPosition = mul(model, float4(input.position, 1.0f));
-    float radiance = light.color * light.intensity;
-    float attenuation;
-    float3 L = getLightVector(light, worldPosition, attenuation);
+    //float3 worldPosition = mul(model, float4(input.position, 1.0f));
     float3 N = normalize(mul((float3x3) model, input.normal));
+    float3 V = normalize(cameraPosition - input.position);
+    
+    
+    float attenuation;
+    float3 L = getLightVector(light, input.position, attenuation);
+    float radiance = light.color * light.intensity * attenuation;
+    
     
     
     
@@ -51,12 +55,16 @@ Output main(Input input)
     float NdotL = saturate(dot(N, L));
     float3 diffuse = radiance * NdotL * attenuation;
     output.diffuse = light.ambient + diffuse;
+
+    //calculateLighting(light, material, worldPosition, N, V, output.diffuse, output.specular);
     
+    
+    //output.specular = light.ambient + calculateSpecular(radiance, N, L);
     output.specular = float3( 0.0f, 0.0f, 0.0f );
     if (NdotL > 0)
     {
         // Blinn-Phong Specular
-        float3 V = normalize(cameraPosition - worldPosition);
+        float3 V = normalize(cameraPosition - input.position);
         float3 H = normalize(V + L);
         float HdotN = saturate(dot(H, N));
         HdotN = pow(HdotN, material.shininess);

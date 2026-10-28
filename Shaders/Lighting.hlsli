@@ -10,19 +10,32 @@ struct Material
     float2 tiling;
     float2 offset;    
     float shininess;
+    float3 padding;
 };
 
 struct Light
 {
     float3 position;
     uint type;
+    
     float3 direction;
-    float innerCutoff;
+    float range;
+    
     float3 color;
     float intensity;
+    
     float3 ambient;
+    float innerCutoff;
+    
     float outerCutoff;
+    float3 padding;
 };
+
+
+float calculateAttenuation(float distance, float range)
+{
+    return pow(1 - saturate(distance / range), 2);
+}
 
 float3 getLightVector(Light light, float3 position, out float attenuation)
 {
@@ -35,13 +48,41 @@ float3 getLightVector(Light light, float3 position, out float attenuation)
             L = normalize(light.direction);
             break;
         case LIGHT_POINT:
-            L = normalize(light.position - position);
+        {
+            
+            float3 toLight = light.position - position;
+            float distance = length(toLight);
+            attenuation = calculateAttenuation(distance, light.range);
+            L = toLight / distance;
+        }
             break;
         case LIGHT_SPOT:
-            L = normalize(light.position - position);
-            attenuation = smoothstep(light.outerCutoff, light.innerCutoff, dot(-L, light.direction));
+        {
+            float3 toLight = light.position - position;
+            float distance = length(toLight);
+            L = toLight / distance;
+            attenuation = calculateAttenuation(distance, light.range);
+            attenuation *= smoothstep(light.outerCutoff, light.innerCutoff, dot(-L, light.direction));
+        }
             break;
     }
         
     return L;
 }
+
+/*
+
+void calculateLighting(Light light, Material material, float3 position, float3 N, float3 V,
+                       out float3 diffuse, out float3 specular)
+{
+    float attenuation;
+    float3 L = getLightVector(light, position, attenuation);
+
+    // light arriving at the surface
+    float3 radiance = light.color * light.intensity * attenuation;
+
+    diffuse = light.ambient + calculateDiffuse(radiance, N, L);
+    specular = calculateSpecular(radiance, N, L, V, material);
+}
+
+*/
