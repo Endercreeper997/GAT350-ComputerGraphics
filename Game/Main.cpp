@@ -134,7 +134,7 @@ int main()
 
     MaterialUniform materialUniform
     {
-        .color{ 1, 0, 0, 1 },
+        .color{ 1, 1, 1, 1 },
         .tiling{ 1.0f, 1.0f },
         .offset{ 0.0f, 0.0f },
         .shininess{ 128.0f }
@@ -144,7 +144,7 @@ int main()
 
     Transform transform;
     //transform.rotation.x = 90.0f;
-    transform.scale = glm::vec3{ 0, 3, 0 };
+    transform.position = glm::vec3{ 0, 3, 0 };
 
     // MAIN LOOP
     bool quit = false;
