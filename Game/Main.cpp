@@ -38,8 +38,8 @@ int main()
     Engine::Instance().Initialize();
 
     // Model rendering
-    auto model = Resources().Get<Model>("models/ogre.obj", Engine::Instance().GetRenderer());
-    auto texture = Resources().Get<Texture>("textures/ogre_diffuse.bmp", Engine::Instance().GetRenderer());
+    auto model = Resources().Get<Model>("models/dragon.obj", Engine::Instance().GetRenderer());
+    auto texture = Resources().Get<Texture>("textures/lava_diffuse.png", Engine::Instance().GetRenderer());
 
     auto vshader = Resources().Get<nu::Shader>("shaders/phong.vert", Engine::Instance().GetRenderer(), 3);
     auto fshader = Resources().Get<nu::Shader>("shaders/phong.frag", Engine::Instance().GetRenderer(), 3, 1);
@@ -94,23 +94,23 @@ int main()
     LightUniform lightUniform;
 
     Light light1{
-        .position{ 10, 10, 10 },
-        .type{ LightType::Point },
-        .direction{ 0, -1, 0 },
+        .position{ 0, 10, 0 },
+        .type{ LightType::Spot },
+        .direction{ 0, 1, 0 },
         .range{ 40 },
-        .color{ 1, 1, 1 },
-        .intensity{ 1 },
+        .color{ 1, 1, 0 },
+        .intensity{ 3 },
         .ambient{ 0.1f },
-        .innerCutoff{ 0.3f },
+        .innerCutoff{ 0.2f },
         .outerCutoff{ 1.6f }
     };
 
     Light light2{
         .position{ -10, 10, 10 },
-        .type{ LightType::Directional },
+        .type{ LightType::Spot },
         .direction{ 0, -1, 0 },
-        .range{ 40 },
-        .color{ 0, 0, 1 },
+        .range{ 0 },
+        .color{ 1, 1, 1 },
         .intensity{ 1 },
         .ambient{ 0.1f },
         .innerCutoff{ 0.3f },
@@ -120,7 +120,7 @@ int main()
     lightUniform.lights[0] = light1;
     lightUniform.lights[1] = light2;
     lightUniform.numLights = 2;
-    lightUniform.ambient = glm::vec3{ 0.2f };
+    lightUniform.ambient = glm::vec3{ 0.1f };
 
     struct MaterialUniform
     {
@@ -181,8 +181,8 @@ int main()
 
         vertexUniform.cameraPosition += (direction * 4.0f) * dt;
 
-        lightUniform.lights[0].position = glm::eulerAngleY(time) * glm::vec4{ 0, 0, 10, 1 };
-        lightUniform.lights[1].position = glm::eulerAngleX(time * 0.5) * glm::vec4{ 0, 0, 10, 1 };
+        //lightUniform.lights[0].position = glm::eulerAngleY(time) * glm::vec4{ 0, 0, 10, 1 };
+        //lightUniform.lights[1].position = glm::eulerAngleX(time * 0.5) * glm::vec4{ 0, 0, 10, 1 };
 
 
 
