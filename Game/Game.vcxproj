@@ -99,8 +99,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\SDL3\lib\$(PlatformTarget);$(SolutionDir)ThirdParty\box2d\lib;$(SolutionDir)ThirdParty\assimp\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sdl3.lib;sdl3_ttf.lib;sdl3_image.lib;box2dd.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\SDL3\lib\$(PlatformTarget);$(SolutionDir)ThirdParty\assimp\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sdl3.lib;sdl3_ttf.lib;sdl3_image.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/WHOLEARCHIVE:Engine.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
@@ -122,8 +122,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\SDL3\lib\$(PlatformTarget);$(SolutionDir)ThirdParty\box2d\lib;$(SolutionDir)ThirdParty\assimp\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sdl3.lib;sdl3_ttf.lib;sdl3_image.lib;box2dd.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\SDL3\lib\$(PlatformTarget);$(SolutionDir)ThirdParty\assimp\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sdl3.lib;sdl3_ttf.lib;sdl3_image.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/WHOLEARCHIVE:Engine.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
@@ -143,8 +143,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\SDL3\lib\$(PlatformTarget);$(SolutionDir)ThirdParty\box2d\lib;$(SolutionDir)ThirdParty\assimp\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sdl3.lib;sdl3_ttf.lib;sdl3_image.lib;box2dd.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\SDL3\lib\$(PlatformTarget);$(SolutionDir)ThirdParty\assimp\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sdl3.lib;sdl3_ttf.lib;sdl3_image.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/WHOLEARCHIVE:Engine.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
@@ -166,8 +166,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\SDL3\lib\$(PlatformTarget);$(SolutionDir)ThirdParty\box2d\lib;$(SolutionDir)ThirdParty\assimp\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sdl3.lib;sdl3_ttf.lib;sdl3_image.lib;box2dd.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)ThirdParty\SDL3\lib\$(PlatformTarget);$(SolutionDir)ThirdParty\assimp\lib\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sdl3.lib;sdl3_ttf.lib;sdl3_image.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/WHOLEARCHIVE:Engine.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
