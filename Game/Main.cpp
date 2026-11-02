@@ -7,6 +7,7 @@
 #include "Renderer/Pipeline.h"
 #include "Renderer/Model.h"
 #include "Renderer/Texture.h"
+#include "Framework/Scene.h"
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
@@ -36,6 +37,9 @@ int main()
 
     // INITIALIZATION
     Engine::Instance().Initialize();
+
+    Scene scene;
+    scene.Load("scenes/scene.json");
 
     // Model rendering
     auto model = Resources().Get<Model>("models/dragon.obj", Engine::Instance().GetRenderer());
