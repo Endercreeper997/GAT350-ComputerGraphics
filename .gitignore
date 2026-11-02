@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# project overrides - keep required assets and third party binaries.
+
+!Build/Assets/**/*.obj
