@@ -16,6 +16,23 @@
           "fov": 70,
           "near_plane": 0.001,
           "far_plane": 200
+        },
+        {
+          "type": "CameraControllerComponent",
+          "speed": 5
+        }
+      ]
+    },
+    {
+      "name": "Light1",
+      "type": "Actor",
+      "tag": "Light",
+      "transform": {
+        "rotation": [ -60, 30, 0 ]
+      },
+      "components": [
+        {
+
         }
       ]
     }

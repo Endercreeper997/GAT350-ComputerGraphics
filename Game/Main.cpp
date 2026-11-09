@@ -9,6 +9,10 @@
 #include "Renderer/Texture.h"
 #include "Framework/Scene.h"
 
+#include "Components/CameraComponent.h"
+
+#include "Resources/ResourceManager.h"
+
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -42,11 +46,11 @@ int main()
     scene.Load("scenes/scene.json");
 
     // Model rendering
-    auto model = Resources().Get<Model>("models/dragon.obj", Engine::Instance().GetRenderer());
-    auto texture = Resources().Get<Texture>("textures/lava_diffuse.png", Engine::Instance().GetRenderer());
+    auto model = Resources().Get<Model>("models/spot.obj", Engine::Instance().GetRenderer());
+    auto texture = Resources().Get<Texture>("textures/spot_diffuse.png", Engine::Instance().GetRenderer());
 
-    auto vshader = Resources().Get<nu::Shader>("shaders/phong.vert", Engine::Instance().GetRenderer(), 3);
-    auto fshader = Resources().Get<nu::Shader>("shaders/phong.frag", Engine::Instance().GetRenderer(), 3, 1);
+    auto vshader = Resources().Get<nu::Shader>("shaders/gouraud.vert", Engine::Instance().GetRenderer(), 3);
+    auto fshader = Resources().Get<nu::Shader>("shaders/gouraud.frag", Engine::Instance().GetRenderer(), 3, 1);
 
     auto pipeline = std::make_shared<Pipeline>();
 
@@ -59,7 +63,7 @@ int main()
     pipeline->Create(*vshader.get(), *fshader.get(),
         Engine::Instance().GetRenderer().GetGPUDevice(),
         Engine::Instance().GetRenderer().GetWindow());
-
+     
 
    
     // GLM
@@ -98,24 +102,36 @@ int main()
     LightUniform lightUniform;
 
     Light light1{
-        .position{ 0, 10, 0 },
-        .type{ LightType::Spot },
-        .direction{ 0, 1, 0 },
-        .range{ 40 },
-        .color{ 1, 1, 0 },
-        .intensity{ 3 },
+        .position{ 0, 20, 0 },
+        .type{ LightType::Directional },
+        .direction{ 0, -1, 0 },
+        .range{ 10 },
+        .color{ 1, 0, 0 },
+        .intensity{ 1 },
         .ambient{ 0.1f },
-        .innerCutoff{ 0.2f },
+        .innerCutoff{ 0.3f },
         .outerCutoff{ 1.6f }
     };
 
     Light light2{
-        .position{ -10, 10, 10 },
-        .type{ LightType::Spot },
+        .position{ -5, 1, 0 },
+        .type{ LightType::Point },
         .direction{ 0, -1, 0 },
-        .range{ 0 },
-        .color{ 1, 1, 1 },
+        .range{ 60 },
+        .color{ 0, 1, 0 },
         .intensity{ 1 },
+        .ambient{ 0.1f },
+        .innerCutoff{ 0.3f },
+        .outerCutoff{ 1.6f }
+    };
+
+    Light light3{
+        .position{ 0, -5, 0 },
+        .type{ LightType::Spot },
+        .direction{ 0, 1, 0 },
+        .range{ 40 },
+        .color{ 0, 0, 1 },
+        .intensity{ 5 },
         .ambient{ 0.1f },
         .innerCutoff{ 0.3f },
         .outerCutoff{ 1.6f }
@@ -123,7 +139,8 @@ int main()
 
     lightUniform.lights[0] = light1;
     lightUniform.lights[1] = light2;
-    lightUniform.numLights = 2;
+    lightUniform.lights[2] = light3;
+    lightUniform.numLights = 3;
     lightUniform.ambient = glm::vec3{ 0.1f };
 
     struct MaterialUniform
@@ -144,10 +161,8 @@ int main()
         .shininess{ 128.0f }
     };
 
-    vertexUniform.cameraPosition = glm::vec3{ 0, 3, 5 };
 
     Transform transform;
-    //transform.rotation.x = 90.0f;
     transform.position = glm::vec3{ 0, 3, 0 };
 
     // MAIN LOOP
@@ -175,49 +190,25 @@ int main()
         float dt = Engine::Instance().GetTime().GetDeltaTime();
         float time = Engine::Instance().GetTime().GetTime();
 
-        //color.r = sin(time * 30.0f) * 0.5f + 0.5f;
-
-        glm::vec3 direction{ 0, 0, 0 };
-        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_A)) direction.x = -1;
-        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_D)) direction.x = +1;
-        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_W)) direction.z = -1;
-        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_S)) direction.z = +1;
-
-        vertexUniform.cameraPosition += (direction * 4.0f) * dt;
-
-        //lightUniform.lights[0].position = glm::eulerAngleY(time) * glm::vec4{ 0, 0, 10, 1 };
-        //lightUniform.lights[1].position = glm::eulerAngleX(time * 0.5) * glm::vec4{ 0, 0, 10, 1 };
+        // Scene
+        scene.Update(dt);
 
 
-
-       /* if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_1)) { lightUniform.type = LightType::Directional; }
-        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_2)) { lightUniform.type = LightType::Point; }
-        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_3))
-        {
-            lightUniform.type = LightType::Spot;
-            lightUniform.position = glm::vec3{ 0, 20, 0 };
-            lightUniform.innerCutoff = glm::cos(glm::radians(20.0f));
-            lightUniform.outerCutoff = glm::cos(glm::radians(40.0f));
-            
-        }*/
-
-
-        //materialUniform.offset.x = time * 0.2;
-        //materialUniform.tiling = glm::vec2{ 2.0f };
         
-        // TRANSFORM
-        //transform.rotation.y = time * 50;
 
-        // VIEW MATRIX
-        auto view = glm::lookAtRH(vertexUniform.cameraPosition, vertexUniform.cameraPosition + glm::vec3{ 0, 0, -1 }, glm::vec3{ 0, 1, 0 });
+        lightUniform.lights[0].position = glm::eulerAngleY(time) * glm::vec4{ 0, 0, 10, 1 };
+        lightUniform.lights[1].position = glm::eulerAngleX(time * 0.5) * glm::vec4{ 0, 0, 10, 1 };
 
-        // PROJECTION MATRIX
-        float aspectRatio = Engine::Instance().GetRenderer().GetWidth() / static_cast<float>(Engine::Instance().GetRenderer().GetHeight());
-        auto projection = glm::perspective(glm::radians(70.0f), aspectRatio, 0.01f, 200.0f);
+        
+        // Camera
+        auto camera = scene.GetActorByName("Camera");
+        auto cameraComponent = camera->GetComponent<CameraComponent>();
+        vertexUniform.cameraPosition = camera->GetTransform().position;
+
 
         // MVP
         vertexUniform.model = transform.GetMatrix();
-        vertexUniform.mvp = projection * view * vertexUniform.model;
+        vertexUniform.mvp = cameraComponent->GetProjection() * cameraComponent->GetView() * vertexUniform.model;
 
 
         // RENDER
