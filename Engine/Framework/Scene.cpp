@@ -33,8 +33,10 @@ namespace nu
 		m_pendingActors.clear();
 	}
 
-	void Scene::Draw(const class Renderer& renderer)
+	void Scene::Draw(const Renderer& renderer)
 	{
+		auto camera = GetActorByName("Camera");
+
 		for (const auto& actor : m_actors)
 		{
 			if (actor)

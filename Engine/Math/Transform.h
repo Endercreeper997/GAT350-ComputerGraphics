@@ -50,6 +50,8 @@ namespace nu
         void Read(const json::value_t& value)
         {
             JSON_READ(value, position);
+
+            //glm::vec3 euler;
             JSON_READ(value, rotation);
             JSON_READ(value, scale);
         }
