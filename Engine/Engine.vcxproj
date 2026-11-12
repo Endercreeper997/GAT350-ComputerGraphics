@@ -176,8 +176,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Audio\Audio.h" />
+    <ClInclude Include="Components\CameraComponent.h" />
+    <ClInclude Include="Components\CameraControllerComponent.h" />
     <ClInclude Include="Components\ColliderComponent.h" />
     <ClInclude Include="Components\Component.h" />
+    <ClInclude Include="Components\LightComponent.h" />
+    <ClInclude Include="Components\MaterialComponent.h" />
+    <ClInclude Include="Components\ModelComponent.h" />
     <ClInclude Include="Components\PhysicsComponent.h" />
     <ClInclude Include="Components\RendererComponent.h" />
     <ClInclude Include="Core\Factory.h" />
@@ -192,6 +197,7 @@
     <ClInclude Include="Framework\Object.h" />
     <ClInclude Include="Framework\Scene.h" />
     <ClInclude Include="Input\Input.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="Math\MathUtils.h" />
     <ClInclude Include="Math\Rect.h" />
     <ClInclude Include="Math\Transform.h" />
@@ -200,6 +206,8 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Renderer\Font.h" />
     <ClInclude Include="Renderer\IndexBuffer.h" />
+    <ClInclude Include="Renderer\Material.h" />
+    <ClInclude Include="Renderer\MaterialInstance.h" />
     <ClInclude Include="Renderer\Mesh.h" />
     <ClInclude Include="Renderer\Model.h" />
     <ClInclude Include="Renderer\ParticleSystem.h" />
@@ -211,9 +219,15 @@
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\ResourceManager.h" />
     <ClInclude Include="Serialization\Json.h" />
+    <ClInclude Include="Uniform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Audio\Audio.cpp" />
+    <ClCompile Include="Components\CameraComponent.cpp" />
+    <ClCompile Include="Components\CameraControllerComponent.cpp" />
+    <ClCompile Include="Components\LightComponent.cpp" />
+    <ClCompile Include="Components\MaterialComponent.cpp" />
+    <ClCompile Include="Components\ModelComponent.cpp" />
     <ClCompile Include="Components\PhysicsComponent.cpp" />
     <ClCompile Include="Core\File.cpp" />
     <ClCompile Include="Core\GameTime.cpp" />
@@ -222,7 +236,6 @@
     <ClCompile Include="Framework\Game.cpp" />
     <ClCompile Include="Framework\Scene.cpp" />
     <ClCompile Include="Input\Input.cpp" />
-    <ClCompile Include="ModelComponent.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -231,6 +244,8 @@
     </ClCompile>
     <ClCompile Include="Renderer\Font.cpp" />
     <ClCompile Include="Renderer\IndexBuffer.cpp" />
+    <ClCompile Include="Renderer\Material.cpp" />
+    <ClCompile Include="Renderer\MaterialInstance.cpp" />
     <ClCompile Include="Renderer\Mesh.cpp" />
     <ClCompile Include="Renderer\Model.cpp" />
     <ClCompile Include="Renderer\ParticleSystem.cpp" />

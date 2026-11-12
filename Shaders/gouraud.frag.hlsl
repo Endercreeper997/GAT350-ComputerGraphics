@@ -9,6 +9,7 @@ cbuffer MaterialUniforms : register(b0, space3)
 
 struct Input
 {
+    float4 position : SV_Position;
     float2 texcoord : TEXCOORD0;
     float3 diffuse : TEXCOORD1;
     float3 specular : TEXCOORD2;

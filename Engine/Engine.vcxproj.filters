@@ -137,6 +137,33 @@
     <ClInclude Include="Renderer\Texture.h">
       <Filter>Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="Components\ModelComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\LightComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\CameraComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\MaterialComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\CameraControllerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Material.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\MaterialInstance.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Uniform.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Components\PhysicsComponent.cpp">
@@ -198,8 +225,26 @@
     <ClCompile Include="Renderer\Texture.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="ModelComponent.cpp">
+    <ClCompile Include="Components\ModelComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\LightComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\CameraComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\MaterialComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\CameraControllerComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Material.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\MaterialInstance.cpp">
+      <Filter>Renderer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
