@@ -18,6 +18,9 @@ namespace nu
 			requires std::derived_from<T, Resource>
 		res_t<T> GetWithID(const std::string& id, const std::string& name, Args&& ... args);
 
+		/*template<std::derived_from<Resource> T = Resource>
+		bool AddResource(const std::string& name, const res_t<T>& resource);*/
+
 		void Clear() { m_resources.clear(); }
 
 	private:

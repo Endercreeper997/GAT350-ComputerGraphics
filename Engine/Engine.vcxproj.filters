@@ -158,6 +158,12 @@
     <ClInclude Include="Renderer\MaterialInstance.h">
       <Filter>Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="Uniform.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Components\PhysicsComponent.cpp">

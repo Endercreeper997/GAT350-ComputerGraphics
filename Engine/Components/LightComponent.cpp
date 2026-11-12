@@ -10,16 +10,21 @@ namespace nu
 
 	void LightComponent::Draw(const Renderer& renderer)
 	{
-
+		LightType m_type = LightType::Point;
+		glm::vec3 m_color{ 1.0f };
+		float m_intensity = 1.0f;
+		float m_range = 20.0f;
+		float m_innerAngle = 20.0f;
+		float m_outerAngle = 30.0f;
 	}
 
 	void LightComponent::Read(const json::value_t& value)
 	{
-		/*std::string typeName;
+		std::string typeName;
 		JSON_READ_NAME(value, "light_type", typeName);
 		if (typeName == "directional") m_type = LightType::Directional;
 		else if (typeName == "spot") m_type = LightType::Spot;
-		else m_type = LightType::Point;*/
+		else m_type = LightType::Point;
 
 		JSON_READ_NAME(value, "color", m_color);
 		JSON_READ_NAME(value, "intensity", m_intensity);
@@ -28,16 +33,15 @@ namespace nu
 		JSON_READ_NAME(value, "outer_angle", m_outerAngle);
 	}
 
-	/*LightData LightComponent::GetLightData() const
+	LightData LightComponent::GetLightData() const
 	{
 		const Transform& transform = m_owner->GetTransform();
-
 		LightData lightData =
 		{
 			.position = transform.position,
 			.type = m_type,
 			.direction = transform.Forward(),
-			.range = m_range
+			.range = m_range,
 			.color = m_color,
 			.intensity = m_intensity,
 			.innerCutoff = glm::cos(glm::radians(m_innerAngle)),
@@ -45,5 +49,5 @@ namespace nu
 		};
 
 		return lightData;
-	}*/
+	}
 }

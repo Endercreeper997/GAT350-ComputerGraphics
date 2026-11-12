@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "MaterialInstance.h"
 #include "Texture.h"
-#include "Uniforms.h"
+#include "Uniform.h"
 #include "Serialization/Json.h"
 #include "Resources/ResourceManager.h"
 

@@ -1,7 +1,7 @@
 #pragma once
 #pragma once
 #include "RendererComponent.h"
-//#include "Renderer/Light.h"
+#include "Light.h"
 
 namespace nu
 {
@@ -13,10 +13,10 @@ namespace nu
 		void Draw(const Renderer& renderer) override;
 		void Read(const json::value_t& value) override;
 
-		//LightData GetLightData() const;
+		LightData GetLightData() const;
 
 	private:
-		//LightType m_type = LightType::Point;
+		LightType m_type = LightType::Point;
 		glm::vec3 m_color{ 1.0f };
 		float m_intensity = 1.0f;
 		float m_range = 20.0f;

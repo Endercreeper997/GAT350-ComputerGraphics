@@ -6,7 +6,7 @@
       "tag": "Camera",
       "active": true,
       "transform": {
-        "position": [ 0, 0, 5 ],
+        "position": [ 0, 0, -5 ],
         "rotation": [ 0, 0, 0 ],
         "scale": [ 1, 1, 1 ]
       },
@@ -15,7 +15,7 @@
           "type": "CameraComponent",
           "fov": 70,
           "near_plane": 0.001,
-          "far_plane": 5000
+          "far_plane": 1000
         },
         {
           "type": "CameraControllerComponent",
@@ -61,6 +61,7 @@
       "name": "Ogre",
       "type": "Actor",
       "tag": "Ogre",
+      "active": true,
       "transform": {
         "position": [ 0, 0, 0 ]
       },
@@ -69,6 +70,47 @@
           "type": "ModelComponent",
           "model": "models/ogre.obj",
           "materials": [ "materials/ogre.instance.json" ]
+        }
+      ]
+    },
+    {
+      "name": "Sphere",
+      "type": "Actor",
+      "tag": "Sphere",
+      "transform": {
+        "position": [ 2, -1, 0 ],
+        "scale": [ 0.4, 0.4, 0.4 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "models/sphere.obj"
+        }
+      ]
+    },
+    {
+      "name": "Helmet",
+      "type": "Actor",
+      "transform": {
+        "position": [ -1, 0, 0 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "models/flight-helmet/flighthelmet.gltf"
+        }
+      ]
+    },
+    {
+      "name": "Cubone",
+      "type": "Actor",
+      "transform": {
+        "position": [ -3, 0, 0 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "models/cubone.glb"
         }
       ]
     }
