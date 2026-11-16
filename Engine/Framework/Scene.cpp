@@ -55,7 +55,7 @@ namespace nu
 		}
 
 		LightUniform lightUniform{};
-		lightUniform.ambient = glm::vec3{ 0.2f };
+		lightUniform.ambient = m_ambientLight;
 
 		auto lights = GetActorByTag("Light");
 		for (auto light : lights)
@@ -143,5 +143,9 @@ namespace nu
 		}
 
 		return true;
+	}
+	void Scene::UpdateGui()
+	{
+		ImGui::ColorEdit3("Ambient Light", glm::value_ptr(m_ambientLight));
 	}
 }

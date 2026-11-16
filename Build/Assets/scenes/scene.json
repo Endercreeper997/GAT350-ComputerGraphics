@@ -58,9 +58,9 @@
       ]
     },
     {
-      "name": "Ogre",
+      "name": "Knight",
       "type": "Actor",
-      "tag": "Ogre",
+      "tag": "Knight",
       "active": true,
       "transform": {
         "position": [ 0, 0, 0 ]
@@ -68,15 +68,14 @@
       "components": [
         {
           "type": "ModelComponent",
-          "model": "models/ogre.obj",
-          "materials": [ "materials/ogre.instance.json" ]
+          "model": "models/knight.glb"
         }
       ]
     },
     {
-      "name": "Sphere",
+      "name": "House1",
       "type": "Actor",
-      "tag": "Sphere",
+      "tag": "House",
       "transform": {
         "position": [ 2, -1, 0 ],
         "scale": [ 0.4, 0.4, 0.4 ]
@@ -84,7 +83,7 @@
       "components": [
         {
           "type": "ModelComponent",
-          "model": "models/sphere.obj"
+          "model": "models/FantasyHouse.glb"
         }
       ]
     },
@@ -111,6 +110,51 @@
         {
           "type": "ModelComponent",
           "model": "models/cubone.glb"
+        }
+      ]
+    },
+    {
+      "name": "House2",
+      "type": "Actor",
+      "tag": "House",
+      "transform": {
+        "position": [ 2, -5, 0 ],
+        "scale": [ 0.4, 0.4, 0.4 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "models/FantasyHouse2.glb"
+        }
+      ]
+    },
+    {
+      "name": "House3",
+      "type": "Actor",
+      "tag": "House",
+      "transform": {
+        "position": [ 2, 10, 0 ],
+        "scale": [ 0.4, 0.4, 0.4 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "models/FantasyHouse3.glb"
+        }
+      ]
+    },
+    {
+      "name": "Hay",
+      "type": "Actor",
+      "tag": "Hay",
+      "transform": {
+        "position": [ 2, -1, 0 ],
+        "scale": [ 0.4, 0.4, 0.4 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "models/Hay.glb"
         }
       ]
     }
