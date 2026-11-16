@@ -116,6 +116,13 @@ namespace nu
 
 	void Editor::UpdateInspector()
 	{
+		ImGui::Begin("Inspector");
+		if (m_selected)
+		{
+			m_selected->UpdateGui();
+		}
+
+		ImGui::End();
 	}
 
 	void Editor::UpdateAssets()
