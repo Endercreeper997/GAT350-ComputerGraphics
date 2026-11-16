@@ -36,7 +36,7 @@ namespace nu
         {
             direction = glm::normalize(direction);
         }
-        m_owner->SetPosition(m_owner->GetTransform().position * direction * m_speed * dt);
+        m_owner->SetPosition(m_owner->GetTransform().position + direction * m_speed * dt);
 
    }
 
