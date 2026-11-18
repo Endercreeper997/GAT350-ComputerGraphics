@@ -136,10 +136,13 @@ namespace nu
 			if (ImGui::Selectable(resource.second->GetName().c_str(), m_selected == resource.second.get()))
 			{
 				m_selected = resource.second.get();
+				//m_selected->
 			}
 
 			//ImGui::Text("%s", resource.second->GetName().c_str());
 			ImGui::PopID();
+			
+			//ImGui::Image((ImTextureID)resource.second->GetTexture(), ImVec2(64, 64));
 		}
 
 		ImGui::End();	

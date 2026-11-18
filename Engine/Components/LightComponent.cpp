@@ -60,5 +60,11 @@ namespace nu
 		{
 			ImGui::SliderFloat("Range", &m_range, 0.0f, 500.0f);
 		}
+		if (m_type == LightType::Spot)
+		{
+			ImGui::SliderFloat("Inner Angle", &m_innerAngle, 0.0f, 90.0f);
+			ImGui::SliderFloat("Outer Angle", &m_outerAngle, 0.0f, 90.0f);
+
+		}	
 	}
 }

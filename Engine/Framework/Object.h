@@ -33,6 +33,7 @@ namespace nu
 		void UpdateGui() override
 		{
 			ImGui::Text("%s", m_name.c_str());
+
 		}
 
 	protected:

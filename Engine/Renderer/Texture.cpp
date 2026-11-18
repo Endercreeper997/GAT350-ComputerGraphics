@@ -228,4 +228,17 @@ namespace nu
 		// texture created and uploaded successfully
 		return true;
 	}
+	void Texture::UpdateGui()
+	{
+		if (m_gpuTexture)
+		{
+			ImGui::Text("Texture: %s", GetName().c_str());
+			ImGui::Text("Size: %d x %d", m_width, m_height);
+			ImGui::Image(m_gpuTexture, ImVec2(128, 128));
+		}
+		else
+		{
+			ImGui::Text("Texture: %s (not loaded)", GetName().c_str());
+		}
+	}
 }
