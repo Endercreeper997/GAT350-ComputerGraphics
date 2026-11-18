@@ -28,9 +28,11 @@ namespace nu
 		}
 
 		JSON_READ_NAME(document, "base_color", m_defaults.baseColor);
+		JSON_READ_NAME(document, "specular_color", m_defaults.specularColor);
+		JSON_READ_NAME(document, "shininess", m_defaults.shininess);
+		JSON_READ_NAME(document, "emissive_color", m_defaults.emissiveColor);
 		JSON_READ_NAME(document, "tiling", m_defaults.tiling);
 		JSON_READ_NAME(document, "offset", m_defaults.offset);
-		JSON_READ_NAME(document, "shininess", m_defaults.shininess);
 
 		// texture slots in sampler order, slot 0 = register(t0, space2)
 		JSON_READ_NAME(document, "textures", m_textureSlots);
@@ -43,9 +45,15 @@ namespace nu
 		}
 
 		// shaders
+		// SDL GPU needs the exact number of uniform buffers / samplers each shader declares,
+		// otherwise the pipeline layout doesn't match the shader and nothing draws.
+		// defaults match uniforms.hlsli: Object, Frame, Light, Material (b0-b3) in both stages,
+		// and one fragment sampler per texture slot.
+		uint32_t fragmentSamplerCount = (uint32_t)m_textureSlots.size();
+
 		std::string vertexShaderName;
 		JSON_READ_NAME(document, "vertex_shader", vertexShaderName);
-		if (!vertexShaderName.empty()) 
+		if (!vertexShaderName.empty())
 			m_vertexShader = Resources().Get<nu::Shader>(vertexShaderName, renderer);
 
 		std::string fragmentShaderName;

@@ -12,6 +12,8 @@ namespace nu
 
 		void Read(const json::value_t& value) override;
 
+		void UpdateGui() override;
+
 	private:
 		float m_speed{ 1 };
 		float m_sensitivity{ 1 };

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Scene.h"
 #include "Actor.h"
+#include "Engine.h"
 #include "Core/Factory.h"
 #include "Renderer/Renderer.h"
 #include "Light.h"
@@ -55,13 +56,15 @@ namespace nu
 		}
 
 		LightUniform lightUniform{};
-		lightUniform.ambient = glm::vec3{ 0.2f };
+		lightUniform.ambient = m_ambientLight;
 
 		auto lights = GetActorByTag("Light");
 		for (auto light : lights)
 		{
+			if (!light->IsActive()) continue;
+
 			auto lightComponent = light->GetComponent<LightComponent>();
-			if (lightComponent)
+			if (lightComponent && lightComponent->IsActive())
 			{
 				lightUniform.lights[lightUniform.count++] = lightComponent->GetLightData();
 			}
@@ -143,5 +146,13 @@ namespace nu
 		}
 
 		return true;
+	}
+	void Scene::UpdateGui()
+	{
+		glm::vec3 clearColor = Engine::Instance().GetRenderer().GetClearColor();
+		ImGui::ColorEdit3("Clear Color", glm::value_ptr(clearColor));
+		Engine::Instance().GetRenderer().SetClearColor(clearColor);
+
+		ImGui::ColorEdit3("Ambient Light", glm::value_ptr(m_ambientLight));
 	}
 }

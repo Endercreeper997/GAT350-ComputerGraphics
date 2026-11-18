@@ -22,8 +22,7 @@ namespace nu
 			aiProcess_FlipUVs |
 			aiProcess_CalcTangentSpace |
 			aiProcess_RemoveRedundantMaterials |
-			aiProcess_OptimizeMeshes
-		);
+			aiProcess_OptimizeMeshes);
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{

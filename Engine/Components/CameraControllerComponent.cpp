@@ -36,7 +36,7 @@ namespace nu
         {
             direction = glm::normalize(direction);
         }
-        m_owner->SetPosition(m_owner->GetTransform().position * direction * m_speed * dt);
+        m_owner->SetPosition(m_owner->GetTransform().position + direction * m_speed * dt);
 
    }
 
@@ -46,5 +46,10 @@ namespace nu
 
         JSON_READ_NAME(value, "speed", m_speed);
         JSON_READ_NAME(value, "sensitivity", m_sensitivity);
+    }
+    void CameraControllerComponent::UpdateGui()
+    {
+        ImGui::SliderFloat("Speed", &m_speed, 0.1f, 10.0f);
+        ImGui::SliderFloat("Sensitivity", &m_sensitivity, 0.1f, 5.0f);
     }
 }

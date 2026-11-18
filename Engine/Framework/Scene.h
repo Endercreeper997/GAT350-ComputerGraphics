@@ -1,5 +1,6 @@
 #pragma once
 #include "Actor.h"
+#include "Editor/Editor.h"
 
 #include <vector>
 #include <string>
@@ -7,7 +8,7 @@
 
 namespace nu
 {
-	class Scene
+	class Scene : public IGui
 	{
 	public:
 		void Update(float dt);
@@ -17,12 +18,15 @@ namespace nu
 		void RemoveAllActors(bool force = false);
 
 		bool Load(const std::string& sceneName);
+		void UpdateGui() override;
 
 		template<typename T = Actor>
 		T* GetActorByName(const std::string& name);
 
 		template<typename T = Actor>
 		std::vector<T*> GetActorByTag(const std::string& name);
+
+		const auto& GetActors() const { return m_actors; }
 
 		void SetGame(class Game* game) { m_game = game; }
 		class Game* GetGame() { return m_game; }
@@ -33,6 +37,8 @@ namespace nu
 		std::vector<std::unique_ptr<Actor>> m_pendingActors;
 
 		class Game* m_game{ nullptr };
+
+		glm::vec3 m_ambientLight{ 0.2f };
 	};
 
 	template<typename T>

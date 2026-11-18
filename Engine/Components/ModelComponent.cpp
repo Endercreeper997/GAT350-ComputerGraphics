@@ -58,4 +58,22 @@ namespace nu
 			}
 		}
 	}
+	void ModelComponent::UpdateGui()
+	{
+		if (ImGui::TreeNode("ModelComponent"))
+		{
+			ImGui::Text("Model: %s", m_model ? m_model->GetName().c_str() : "None");
+			if(m_materials.empty())
+				ImGui::Text("Materials: None");
+			else
+			{
+				ImGui::Text("Materials:");
+				for (const auto& material : m_materials)
+				{
+					ImGui::Text(material->GetName().c_str());
+				}
+			}
+			ImGui::TreePop();
+		}
+	}
 }
