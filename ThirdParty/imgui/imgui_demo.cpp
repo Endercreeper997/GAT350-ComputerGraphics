@@ -345,7 +345,9 @@ struct ImGuiDemoWindowData
 // You may then search for keywords in the code when you are interested by a specific feature.
 void ImGui::ShowDemoWindow(bool* p_open)
 {
-    // Exceptionally add an extra assert here for people confused about initial Dear ImGui setup
+    // Exceptionally add an extra 
+    // 
+    // here for people confused about initial Dear ImGui setup
     // Most functions would normally just assert/crash if the context is missing.
     IM_ASSERT(ImGui::GetCurrentContext() != NULL && "Missing Dear ImGui context. Refer to examples app!");
 

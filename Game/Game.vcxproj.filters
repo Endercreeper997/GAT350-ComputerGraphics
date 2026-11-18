@@ -28,5 +28,11 @@
     <None Include="..\Build\Assets\materials\squirrel.instance.json">
       <Filter>Assets\Materials</Filter>
     </None>
+    <None Include="..\Build\Assets\materials\multi.material.json">
+      <Filter>Assets\Materials</Filter>
+    </None>
+    <None Include="..\Build\Assets\materials\ground.instance.json">
+      <Filter>Assets\Materials</Filter>
+    </None>
   </ItemGroup>
 </Project>

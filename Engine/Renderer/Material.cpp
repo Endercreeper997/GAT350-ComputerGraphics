@@ -43,9 +43,15 @@ namespace nu
 		}
 
 		// shaders
+		// SDL GPU needs the exact number of uniform buffers / samplers each shader declares,
+		// otherwise the pipeline layout doesn't match the shader and nothing draws.
+		// defaults match uniforms.hlsli: Object, Frame, Light, Material (b0-b3) in both stages,
+		// and one fragment sampler per texture slot.
+		uint32_t fragmentSamplerCount = (uint32_t)m_textureSlots.size();
+
 		std::string vertexShaderName;
 		JSON_READ_NAME(document, "vertex_shader", vertexShaderName);
-		if (!vertexShaderName.empty()) 
+		if (!vertexShaderName.empty())
 			m_vertexShader = Resources().Get<nu::Shader>(vertexShaderName, renderer);
 
 		std::string fragmentShaderName;

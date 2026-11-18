@@ -125,9 +125,6 @@
     <ClInclude Include="Resources\Resource.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\Shader.h">
-      <Filter>Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer\VertexBuffer.h">
       <Filter>Renderer</Filter>
     </ClInclude>
@@ -200,6 +197,9 @@
     <ClInclude Include="Editor\Editor.h">
       <Filter>Editor</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\Shader.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Components\PhysicsComponent.cpp">
@@ -246,9 +246,6 @@
     <ClCompile Include="Renderer\VertexBuffer.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\Shader.cpp">
-      <Filter>Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer\Pipeline.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
@@ -276,9 +273,6 @@
     <ClCompile Include="Components\CameraControllerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\Material.cpp">
-      <Filter>Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer\MaterialInstance.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
@@ -305,6 +299,12 @@
     </ClCompile>
     <ClCompile Include="Editor\Editor.cpp">
       <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Material.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Shader.cpp">
+      <Filter>Renderer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

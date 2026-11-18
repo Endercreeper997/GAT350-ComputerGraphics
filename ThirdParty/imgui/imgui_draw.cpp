@@ -967,7 +967,8 @@ void ImDrawList::_AddPolyline(const ImVec2* points, const int points_count, ImU3
         thickness = _FringeScale;
     }
 
-    // If this assert triggers on legacy code:
+    // If this 
+    // triggers on legacy code:
     // - 1.92.8 (2025/05): swapped two last parameters order: flags, thickness --> thickness, flags. This should normally be caught by compile-time type-checking.
     // - 1.92.8 (2025/05): changed value of ImDrawList_Closed which was previously guaranteed to be == 1. Hardcoded use of 1 or true should be replaced.
     // Read more details near AddRect() + see "API BREAKING CHANGES" section for 1.82, 1.90 and 1.92.8.

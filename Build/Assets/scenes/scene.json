@@ -68,7 +68,7 @@
       "components": [
         {
           "type": "ModelComponent",
-          "model": "models/knight.glb"
+          "model": "models/Knight.glb"
         }
       ]
     },
@@ -78,7 +78,7 @@
       "tag": "House",
       "transform": {
         "position": [ 2, -1, 0 ],
-        "scale": [ 0.4, 0.4, 0.4 ]
+        "scale": [ 1.4, 1.4, 1.4 ]
       },
       "components": [
         {
@@ -91,7 +91,7 @@
       "name": "Helmet",
       "type": "Actor",
       "transform": {
-        "position": [ -1, 0, 0 ]
+        "position": [ -4, 0, 0 ]
       },
       "components": [
         {
@@ -101,15 +101,18 @@
       ]
     },
     {
-      "name": "Cubone",
+      "name": "Sphere",
       "type": "Actor",
+      "tag":  "Sphere",
       "transform": {
-        "position": [ -3, 0, 0 ]
+        "position": [ 0, 0, 3 ],
+        "scale":  [ 1, 1, 1 ]
       },
       "components": [
         {
           "type": "ModelComponent",
-          "model": "models/cubone.glb"
+          "model": "models/sphere.obj",
+          "materials": ["materials/ground.instance.json"]
         }
       ]
     },
@@ -119,7 +122,7 @@
       "tag": "House",
       "transform": {
         "position": [ 2, -5, 0 ],
-        "scale": [ 0.4, 0.4, 0.4 ]
+        "scale": [ 1.4, 1.4, 1.4 ]
       },
       "components": [
         {
@@ -134,7 +137,7 @@
       "tag": "House",
       "transform": {
         "position": [ 2, 10, 0 ],
-        "scale": [ 0.4, 0.4, 0.4 ]
+        "scale": [ 1.4, 1.4, 1.4 ]
       },
       "components": [
         {
@@ -149,7 +152,7 @@
       "tag": "Hay",
       "transform": {
         "position": [ 2, -1, 0 ],
-        "scale": [ 0.4, 0.4, 0.4 ]
+        "scale": [ 1.4, 1.4, 1.4 ]
       },
       "components": [
         {
