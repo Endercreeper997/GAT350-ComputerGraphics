@@ -11,10 +11,12 @@ namespace nu
 	struct MaterialData
 	{
 		glm::vec4 baseColor{ 1.0f };
+		glm::vec3 specularColor{ 1.0f };
+		float shininess = 32.0f;
+		glm::vec3 emissiveColor{ 0.0f };
+		float padding{ 0.0f };
 		glm::vec2 tiling{ 1.0f };
 		glm::vec2 offset{ 0.0f };
-		float shininess = 32.0f;
-		glm::vec3 padding{ 0.0f };
 	};
 
 	class Material : public Resource

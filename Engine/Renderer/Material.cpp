@@ -28,9 +28,11 @@ namespace nu
 		}
 
 		JSON_READ_NAME(document, "base_color", m_defaults.baseColor);
+		JSON_READ_NAME(document, "specular_color", m_defaults.specularColor);
+		JSON_READ_NAME(document, "shininess", m_defaults.shininess);
+		JSON_READ_NAME(document, "emissive_color", m_defaults.emissiveColor);
 		JSON_READ_NAME(document, "tiling", m_defaults.tiling);
 		JSON_READ_NAME(document, "offset", m_defaults.offset);
-		JSON_READ_NAME(document, "shininess", m_defaults.shininess);
 
 		// texture slots in sampler order, slot 0 = register(t0, space2)
 		JSON_READ_NAME(document, "textures", m_textureSlots);

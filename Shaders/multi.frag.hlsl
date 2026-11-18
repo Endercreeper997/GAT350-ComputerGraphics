@@ -51,9 +51,9 @@ Output main(Input input)
     
     
     float t = base3_texture.Sample(base3_sampler, input.texcoord).r;
-    float4 albedo1 = base1_texture.Sample(base1_sampler, input.texcoord) * material.color;
-    float4 albedo2 = base2_texture.Sample(base2_sampler, input.texcoord) * material.color;
-    float4 albedo3 = base3_texture.Sample(base3_sampler, input.texcoord) * material.color;
+    float4 albedo1 = base1_texture.Sample(base1_sampler, input.texcoord) * material.baseColor;
+    float4 albedo2 = base2_texture.Sample(base2_sampler, input.texcoord) * material.baseColor;
+    float4 albedo3 = base3_texture.Sample(base3_sampler, input.texcoord) * material.baseColor;
     float4 albedo = lerp(albedo1, albedo2, t);
     
     float3 diffuse = lights.ambient;
@@ -67,7 +67,7 @@ Output main(Input input)
         calculateLighting(lights.lights[i], material, input.worldPosition, normalize(input.normal), V, diffuse, specular);
     }
     
-    output.color = float4(albedo.rgb * diffuse + specular, albedo.a);
+    output.color = float4(albedo.rgb * diffuse + specular * material.specularColor, albedo.a);
     
 	return output;
 }
