@@ -57,6 +57,25 @@ namespace nu
 		}
 	}
 
+	void Model::UpdateGui()
+	{
+		Resource::UpdateGui();
+
+		ImGui::TextColored({ 0, 1, 0, 1 }, "Meshes");
+		ImGui::Separator();
+		for (size_t i = 0; i < m_meshes.size(); i++)
+		{
+			ImGui::Text("Mesh [%d]: Material [%d]", i, m_meshes[i].materialIndex);
+		}
+
+		ImGui::TextColored({ 0, 1, 0, 1 }, "Materials");
+		ImGui::Separator();
+		for (size_t i = 0; i < m_materials.size(); i++)
+		{
+			ImGui::Text("Material [%d]: %s", i, m_materials[i].GetName().c_str());
+		}
+	}
+
 	void Model::ProcessNode(aiNode* node, const aiScene* scene, const Renderer& renderer)
 	{
 		// process the current node meshes
@@ -203,6 +222,8 @@ namespace nu
 			// print what was loaded for this slot
 			aiString name;
 			source->Get(AI_MATKEY_NAME, name);
+
+			instance.SetName(name.C_Str());
 
 			const MaterialData& data = instance.GetData();
 			std::cout << "  [" << i << "] " << name.C_Str()

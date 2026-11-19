@@ -126,5 +126,17 @@ namespace nu
 		ImGui::DragFloat2("Tiling", glm::value_ptr(m_data.tiling), 0.1f);
 		ImGui::DragFloat2("Offset", glm::value_ptr(m_data.offset), 0.1f);
 
+		for(auto& texture : m_textures)
+		{
+			ImGui::Separator();
+			if (texture)
+			{
+				texture->UpdateGui();
+			}
+			else
+			{
+				ImGui::Text("Texture: (none)");
+			}
+		}
 	}
 }

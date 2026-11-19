@@ -230,11 +230,15 @@ namespace nu
 	}
 	void Texture::UpdateGui()
 	{
+		Resource::UpdateGui();
+		float width = ImGui::GetContentRegionAvail().x / 2;
+
 		if (m_gpuTexture)
 		{
 			ImGui::Text("Texture: %s", GetName().c_str());
 			ImGui::Text("Size: %d x %d", m_width, m_height);
-			ImGui::Image(m_gpuTexture, ImVec2(128, 128));
+			ImGui::Image(m_gpuTexture, ImVec2(width, width * (m_height / (float)m_width)));
+
 		}
 		else
 		{

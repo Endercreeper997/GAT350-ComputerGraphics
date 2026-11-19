@@ -62,15 +62,19 @@ namespace nu
 	{
 		if (ImGui::TreeNode("ModelComponent"))
 		{
-			ImGui::Text("Model: %s", m_model ? m_model->GetName().c_str() : "None");
+			ImGui::TextColored({ 0, 1, 0, 1 }, "Model: %s", m_model ? m_model->GetName().c_str() : "None");
 			if(m_materials.empty())
 				ImGui::Text("Materials: None");
 			else
 			{
 				ImGui::Text("Materials:");
-				for (const auto& material : m_materials)
+				/*for (const auto& material : m_materials)
 				{
 					ImGui::Text(material->GetName().c_str());
+				}*/
+				for (size_t i = 0; i < m_materials.size(); i++)
+				{
+					ImGui::Text("Material [%d] - %s", i, m_materials[i]->GetName().c_str());
 				}
 			}
 			ImGui::TreePop();
